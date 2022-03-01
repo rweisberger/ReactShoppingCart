@@ -7,20 +7,20 @@ function NavBar({ store }) {
     const addToCart = (index, e) => {
         let [itemName, numInStock] = e.target.innerHTML.split(":");
         console.log([itemName, numInStock])
+        
+        let newCartItem = stock.filter(item => item.name == itemName && item.stock !== 0);
+        setCart([...cart, ...newCartItem]);
+        console.log(cart);
 
-        let newStock = stock.map((item, index) => {
+        let newStock = stock.map((item) => {
             if(item.name == itemName && item.stock == 0) alert(`${item.name} is unavailable`);
             if(item.name == itemName && item.stock > 0) item.stock--;
             return item;
         });
+    
         setStock(newStock);
 
-
-        let newCartItem = stock.filter(item => item.name == itemName);
-        setCart([...cart, ...newCartItem]);
-        console.log(cart)
     };
-        
         const displayedCart = cart.map((item,index) => {
             return(
                 <Button key={index}>{item.name}</Button>
